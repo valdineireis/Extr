@@ -95,11 +95,11 @@ class Core
 
         $refl = new \ReflectionMethod($this->currentController, $this->currentMethod);
         $totalParams = count($this->params);
-        $isCorrectNumberOfParams = 
+        $isNotCorrectNumberOfParams = 
             $totalParams != $refl->getNumberOfParameters() && 
             $totalParams != $refl->getNumberOfRequiredParameters();
 
-        if ( $isCorrectNumberOfParams ) {
+        if ( $isNotCorrectNumberOfParams ) {
             throw new \Exception("Invalid number of parameters.");
         }
     }
