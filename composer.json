@@ -1,0 +1,21 @@
+{
+    "name": "valdineireis/extr",
+    "description": "Simple PHP Start Project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valdinei Reis",
+            "email": "valdinei@nocodigo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Extr\\": "src/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    }
+}
