@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><?php echo $title ?></title>
+        <title>{{ title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             .box {
@@ -22,8 +22,8 @@
     </head>
     <body>
         <div class="box">
-            <p class="number_error"><?php echo $code ?></p>
-            <p class="error_msg"><?php echo $message ?></p>
+            <p class="number_error">{{ code }}</p>
+            <p class="error_msg">{{ message }}</p>
         </div>
     </body>
 </html>

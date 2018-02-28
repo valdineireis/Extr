@@ -1,0 +1,18 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+	{{ parent() }}
+    <style type="text/css">
+        .important { color: #336699; font-weight: bold; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Index</h1>
+    <p>Hello World!! I am {{ name }}.</p>
+    <div class="important">
+        <p>Welcome to my awesome homepage.</p>
+    </div>
+{% endblock %}

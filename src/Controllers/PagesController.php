@@ -7,23 +7,13 @@ use Extr\Core\Controller;
 class PagesController extends Controller
 {
     public function __construct()
-    {} 
+    {
+        parent::__construct();
+    } 
 
     public function index()
     {
-        echo 'Index';
-        /*
-        if (isLoggedIn()) {
-            redirect('posts');
-        }
-
-        $data = [
-            'title' => 'Title',
-            'description' => 'Description'
-        ];       
-
-        $this->loadTemplate("Usuarios/listagem", $this->data;
-        */
+        $this->loadView('pages/index', array('name' => 'Valdinei Reis'));
     }
 
     public function about()
