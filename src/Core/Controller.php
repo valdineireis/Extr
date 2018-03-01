@@ -20,7 +20,10 @@ class Controller
             new TwigFunction(
                 'form_token',
                 function($lock_to = null) {
-                    return CsrfHelper::getHiddenInputString();
+                    if (is_null($lock_to)) {
+                        return CsrfHelper::getHiddenInputString();
+                    }
+                    return CsrfHelper::getHiddenInputString($lock_to);
                 },
                 ['is_safe' => ['html']]
             )

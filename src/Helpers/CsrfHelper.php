@@ -16,11 +16,12 @@ class CsrfHelper
 	 *
 	 * @return void
 	 */
-    public static function generateToken()
+    public static function generateToken($tokenName = self::TOKEN_NAME)
 	{
 		// generate as random of a token as possible
 		$salt = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : uniqid();
-		$_SESSION[self::TOKEN_NAME] = sha1(uniqid(sha1($salt), true));
+		$salt .= $tokenName;
+		$_SESSION[$tokenName] = sha1(uniqid(sha1($salt), true));
 	}
 
 	/**
@@ -28,12 +29,12 @@ class CsrfHelper
 	 *
 	 * @return string
 	 */
-	public static function getToken()
+	public static function getToken($tokenName = self::TOKEN_NAME)
 	{
-		if (empty($_SESSION[self::TOKEN_NAME])) {
-			static::generateToken(self::TOKEN_NAME);
+		if (empty($_SESSION[$tokenName])) {
+			static::generateToken($tokenName);
 		}
-		return $_SESSION[self::TOKEN_NAME];
+		return $_SESSION[$tokenName];
 	}
 
 	/**
@@ -41,9 +42,9 @@ class CsrfHelper
 	 *
 	 * @return string
 	 */
-	public static function getTokenName()
+	public static function getTokenName($tokenName = self::TOKEN_NAME)
 	{
-		return self::TOKEN_NAME;
+		return $tokenName;
 	}
 
 	/**
@@ -52,19 +53,19 @@ class CsrfHelper
 	 * @param array $requestData - your whole POST/GET array - will index in with the token name to get the token.
 	 * @return bool
 	 */
-	public static function validate($requestData = array())
+	public static function validate($requestData = array(), $tokenName = self::TOKEN_NAME)
 	{
-		if (empty($_SESSION[self::TOKEN_NAME])) {
-			static::generateToken();
+		if (empty($_SESSION[$tokenName])) {
+			static::generateToken($tokenName);
 			return false;
 		} 
 
-		if (empty($requestData[self::TOKEN_NAME])) {
+		if (empty($requestData[$tokenName])) {
 			return false;
 		} 
 
-		if (static::compare($requestData[self::TOKEN_NAME], static::getToken())) {
-			static::generateToken();
+		if (static::compare($requestData[$tokenName], static::getToken($tokenName))) {
+			static::generateToken($tokenName);
 			return true;
 		}
 
@@ -76,9 +77,9 @@ class CsrfHelper
 	 *
 	 * @return string
 	 */
-	public static function getHiddenInputString()
+	public static function getHiddenInputString($tokenName = self::TOKEN_NAME)
 	{
-		return sprintf('<input type="hidden" name="%s" value="%s"/>', self::TOKEN_NAME, static::getToken());
+		return sprintf('<input type="hidden" name="%s" value="%s"/>', $tokenName, static::getToken($tokenName));
 	}
 
 	/**
