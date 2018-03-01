@@ -4,6 +4,7 @@ namespace Extr\Core;
 
 use Twig\Loader\FilesystemLoader,
     Twig\Environment,
+    Twig\TwigFunction,
     Extr\Helpers\CsrfHelper;
 
 class Controller 
@@ -15,8 +16,15 @@ class Controller
     {
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
         $this->twig = new Environment($loader);
-
-        $this->setData(['csrf_token' => CsrfHelper::getHiddenInputString()]);
+        $this->twig->addFunction(
+            new TwigFunction(
+                'form_token',
+                function($lock_to = null) {
+                    return CsrfHelper::getHiddenInputString();
+                },
+                ['is_safe' => ['html']]
+            )
+        );
     }
 
     protected function setData(array $data)
@@ -29,8 +37,8 @@ class Controller
         return $this->data;
     }
 
-    public function loadView($viewName, $viewData = array()) 
+    public function loadView($viewName) 
     {
-        echo $this->twig->render($viewName . '.html.twig', $viewData);
+        echo $this->twig->render($viewName . '.html.twig', $this->getData());
     }
 }

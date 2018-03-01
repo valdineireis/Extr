@@ -18,7 +18,7 @@
 
 	<form method="POST" action="/pages/csrftest">
 		<h3>Form CSRF</h3>
-    	{{ csrf_token | raw }}
+    	{{ form_token() }}
     	<input type="text" name="name">
     	<input type="submit" value="Send">
 	</form>

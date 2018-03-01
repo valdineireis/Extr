@@ -14,8 +14,10 @@ class PagesController extends Controller
 
     public function index()
     {
-        $this->setData(['name' => 'Valdinei Reis']);
-        $this->loadView('pages/index', $this->getData());
+        $this->setData([
+            'name' => 'Valdinei Reis'
+        ]);
+        $this->loadView('pages/index');
     }
 
     public function csrftest()

@@ -29,13 +29,13 @@ class ErrorsController extends Controller
      */
     public function serveError()
     {
-        $this->data = [
+        $this->setData([
             'code' => 500,
             'title' => 'Erro no servidor',
             'message' => 'Ocorreu um erro no servidor!'
-        ];
+        ]);
 
-        $this->loadView('500', $this->data);
+        $this->loadView('500');
     }
 
     /**
@@ -43,12 +43,12 @@ class ErrorsController extends Controller
      */
     public function argumentCountError()
     {
-        $this->data = [
+        $this->setData([
             'code' => 500,
             'title' => 'Erro no servidor',
             'message' => 'Os parâmetros da URL estão incorretos!'
-        ];
+        ]);
 
-        $this->loadView('500', $this->data);
+        $this->loadView('500');
     }
 }
