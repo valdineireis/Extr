@@ -2,7 +2,8 @@
 
 namespace Extr\Core;
 
-use Extr\Controllers\ErrorsController;
+use Extr\Controllers\ErrorsController,
+    Extr\Helpers\CsrfHelper;
 
 /**
  * App Core Class
@@ -76,6 +77,7 @@ class Core
     {
         try {
             $this->verifyParams();
+            $this->verifyRequest();
             // Call a callback with array of params
             call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
         } catch (\Exception $e) {
@@ -101,6 +103,23 @@ class Core
 
         if ( $isNotCorrectNumberOfParams ) {
             throw new \Exception("Invalid number of parameters.");
+        }
+    }
+
+    private function verifyRequest()
+    {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'POST':
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $isValidRequest = CsrfHelper::validate($_POST);
+                break;
+            default:
+                $isValidRequest = true;
+                break;
+        }
+
+        if (!$isValidRequest) {
+            throw new \Exception("Invalid token csrf.");
         }
     }
 

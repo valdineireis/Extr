@@ -2,8 +2,7 @@
 
 namespace Extr\Controllers;
 
-use Extr\Core\Controller,
-    Extr\Helpers\CsrfHelper;
+use Extr\Core\Controller;
 
 class PagesController extends Controller
 {
@@ -22,11 +21,7 @@ class PagesController extends Controller
 
     public function csrftest()
     {
-        if (CsrfHelper::validate($_POST)) {
-            echo 'Validate request. Success!';
-        } else {
-            echo 'Invalid request!';
-        }
+        echo 'Success!';
     }
 
     public function about()
