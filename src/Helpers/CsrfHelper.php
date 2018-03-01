@@ -2,24 +2,14 @@
 
 namespace Extr\Helpers;
 
-class CsrfTHelper
+class CsrfHelper
 {
     /**
      * The token name.
      *
      * @var string
      */
-    protected $tokenName;
-
-	/**
-     * Create a new Helper.
-     *
-     * @param string   $tokenName      the token name
-     */
-    public function __construct($tokenName = 'X-XSRF-TOKEN')
-    {
-        $this->tokenName = $tokenName;
-    }
+    private const TOKEN_NAME = 'X-XSRF-TOKEN';
 
     /**
 	 * Generate a token and write it to session
@@ -30,7 +20,7 @@ class CsrfTHelper
 	{
 		// generate as random of a token as possible
 		$salt = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : uniqid();
-		$_SESSION[$this->tokenName] = sha1(uniqid(sha1($salt), true));
+		$_SESSION[self::TOKEN_NAME] = sha1(uniqid(sha1($salt), true));
 	}
 
 	/**
@@ -40,10 +30,10 @@ class CsrfTHelper
 	 */
 	public static function getToken()
 	{
-		if (empty($_SESSION[$this->tokenName])) {
-			static::generateToken($this->tokenName);
+		if (empty($_SESSION[self::TOKEN_NAME])) {
+			static::generateToken(self::TOKEN_NAME);
 		}
-		return $_SESSION[$this->tokenName];
+		return $_SESSION[self::TOKEN_NAME];
 	}
 
 	/**
@@ -53,7 +43,7 @@ class CsrfTHelper
 	 */
 	public static function getTokenName()
 	{
-		return $this->tokenName;
+		return self::TOKEN_NAME;
 	}
 
 	/**
@@ -64,16 +54,16 @@ class CsrfTHelper
 	 */
 	public static function validate($requestData = array())
 	{
-		if (empty($_SESSION[$this->tokenName])) {
+		if (empty($_SESSION[self::TOKEN_NAME])) {
 			static::generateToken();
 			return false;
 		} 
 
-		if (empty($requestData[$this->tokenName])) {
+		if (empty($requestData[self::TOKEN_NAME])) {
 			return false;
 		} 
 
-		if (static::compare($requestData[$this->tokenName], static::getToken())) {
+		if (static::compare($requestData[self::TOKEN_NAME], static::getToken())) {
 			static::generateToken();
 			return true;
 		}
@@ -88,7 +78,7 @@ class CsrfTHelper
 	 */
 	public static function getHiddenInputString()
 	{
-		return sprintf('<input type="hidden" name="%s" value="%s"/>', $this->tokenName, static::getToken());
+		return sprintf('<input type="hidden" name="%s" value="%s"/>', self::TOKEN_NAME, static::getToken());
 	}
 
 	/**

@@ -15,4 +15,13 @@
     <div class="important">
         <p>Welcome to my awesome homepage.</p>
     </div>
+
+	<form method="POST" action="/pages/csrftest">
+		<h3>Form CSRF</h3>
+    	{{ csrf_token | raw }}
+    	<input type="text" name="name">
+    	<input type="submit" value="Send">
+	</form>
+
+	<br>
 {% endblock %}
