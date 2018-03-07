@@ -15,7 +15,9 @@ class Controller
     public function __construct()
     {
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
-        $this->twig = new Environment($loader);
+        $this->twig = new Environment($loader, array(
+            'cache' => __DIR__ . '/Cache'
+        ));
         $this->twig->addFunction(
             new TwigFunction(
                 'form_token',
