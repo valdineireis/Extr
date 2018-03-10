@@ -119,7 +119,7 @@ class Core
         }
 
         if (!$isValidRequest) {
-            throw new \Exception("Invalid token csrf.");
+            throw new \Exception("Invalid CSRF Token.");
         }
     }
 
