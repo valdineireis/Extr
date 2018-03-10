@@ -14,10 +14,17 @@ class Controller
 
     public function __construct()
     {
+        $this->initTwig();
+    }
+
+    private function initTwig()
+    {
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
+
         $this->twig = new Environment($loader, array(
             'cache' => __DIR__ . '/Cache'
         ));
+
         $this->twig->addFunction(
             new TwigFunction(
                 'form_token',
