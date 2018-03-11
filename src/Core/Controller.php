@@ -7,7 +7,7 @@ use Twig\Loader\FilesystemLoader,
     Twig\TwigFunction,
     Extr\Helpers\CsrfHelper;
 
-class Controller 
+abstract class Controller 
 {
 	private $data = [];
     protected $twig;
