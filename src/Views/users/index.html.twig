@@ -1,0 +1,27 @@
+{% extends "template.html.twig" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+    <h1>Users</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="2">Users not found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
