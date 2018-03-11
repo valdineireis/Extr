@@ -1,8 +1,10 @@
 <?php
 
-namespace Extr\Core;
+namespace Extr\Core\PDO;
 
-abstract class Model
+use \PDO;
+
+abstract class ModelBase
 {
     private $stmt;
     private $db;
