@@ -2,10 +2,8 @@
 
 namespace Extr\Core;
 
-use Twig\Loader\FilesystemLoader,
-    Twig\Environment,
-    Twig\TwigFunction,
-    Extr\Helpers\CsrfHelper;
+use Extr\Helpers\CsrfHelper,
+    Extr\Helpers\TwigHelper;
 
 abstract class Controller 
 {
@@ -19,24 +17,7 @@ abstract class Controller
 
     private function initTwig()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../Views');
-
-        $this->twig = new Environment($loader, array(
-            'cache' => __DIR__ . '/Cache'
-        ));
-
-        $this->twig->addFunction(
-            new TwigFunction(
-                'form_token',
-                function($lock_to = null) {
-                    if (is_null($lock_to)) {
-                        return CsrfHelper::getHiddenInputString();
-                    }
-                    return CsrfHelper::getHiddenInputString($lock_to);
-                },
-                ['is_safe' => ['html']]
-            )
-        );
+        $this->twig = TwigHelper::getInstance()->getTwig();
     }
 
     protected function setData(array $data)
