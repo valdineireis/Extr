@@ -28,8 +28,42 @@ abstract class Controller
         return $this->data;
     }
 
-    public function loadView($viewName) 
+    protected function loadView($viewName) 
     {
         echo $this->twig->render($viewName . '.html.twig', $this->getData());
     }
+
+    #region Methods Helper
+
+    /**
+     * $name - Parameter name
+     * $filter options:
+     *   For GENERAL values (default) - FILTER_SANITIZE_STRING
+     *   For HTML values use          - FILTER_SANITIZE_SPECIAL_CHARS
+     */
+    protected function requestPost($name, $filter=FILTER_SANITIZE_STRING)
+    {
+        return filter_input(INPUT_POST, $name, $filter);
+    }
+
+    /**
+     * $name - Parameter name
+     * $filter options:
+     *   For GENERAL values (default) - FILTER_SANITIZE_STRING
+     *   For HTML values use          - FILTER_SANITIZE_SPECIAL_CHARS
+     */
+    protected function requestGet($name, $filter=FILTER_SANITIZE_STRING)
+    {
+        return filter_input(INPUT_GET, $name, $filter);
+    }
+
+    protected function redirectTo($url)
+    {
+        if ($url) {
+            header('Location: ' . $url);
+            exit();
+        }
+    }
+
+    #endregion
 }

@@ -110,7 +110,6 @@ class Core
     {
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'POST':
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
                 $isValidRequest = CsrfHelper::validate($_POST);
                 break;
             default:

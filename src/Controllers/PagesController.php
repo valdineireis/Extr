@@ -21,7 +21,7 @@ class PagesController extends Controller
 
     public function csrftest()
     {
-        echo 'Success!';
+        echo 'Success! ' . $this->requestPost('name');
     }
 
     public function about()
