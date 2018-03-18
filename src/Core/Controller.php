@@ -3,21 +3,19 @@
 namespace Extr\Core;
 
 use Extr\Helpers\CsrfHelper,
-    Extr\Helpers\TwigHelper;
+    Extr\Helpers\TwigHelper,
+    Extr\Helpers\FlashMessageHelper;
 
 abstract class Controller 
 {
 	private $data = [];
     protected $twig;
+    protected $msg;
 
     public function __construct()
     {
-        $this->initTwig();
-    }
-
-    private function initTwig()
-    {
-        $this->twig = TwigHelper::getInstance()->getTwig();
+        $this->twig = TwigHelper::getInstance()->getStartedObject();
+        $this->msg = FlashMessageHelper::getInstance()->getStartedObject();
     }
 
     protected function setData(array $data)

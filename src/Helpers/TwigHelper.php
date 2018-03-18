@@ -4,8 +4,7 @@ namespace Extr\Helpers;
 
 use Twig\Loader\FilesystemLoader,
     Twig\Environment,
-    Twig\TwigFunction,
-    Extr\Helpers\CsrfHelper;
+    Twig\TwigFunction;
 
 class TwigHelper
 {
@@ -25,20 +24,27 @@ class TwigHelper
 		return self::$instance;
     }
 
-    public function getTwig()
+    public function getStartedObject()
     {
         return $this->twig;
     }
     
     private function initTwig()
     {
+        global $config;
+
         $loader = new FilesystemLoader(__DIR__ . '/../Views');
 
-        $this->twig = new Environment($loader, array(
-            'cache' => __DIR__ . '/../../cache'
-        ));
+        $options = [];
+
+        if ($config['useTwigCache']) {
+            $options['cache'] = __DIR__ . '/../../twigCache';
+        }
+
+        $this->twig = new Environment($loader, $options);
 
         $this->addCsrfFunction();
+        $this->addFlashMessagesFunction();
     }
 
     private function addCsrfFunction()
@@ -51,6 +57,19 @@ class TwigHelper
                         return CsrfHelper::getHiddenInputString();
                     }
                     return CsrfHelper::getHiddenInputString($lock_to);
+                },
+                ['is_safe' => ['html']]
+            )
+        );
+    }
+
+    private function addFlashMessagesFunction()
+    {
+        $this->twig->addFunction(
+            new TwigFunction(
+                'flash_messages',
+                function() {
+                    return (FlashMessageHelper::getInstance()->getStartedObject())->display();
                 },
                 ['is_safe' => ['html']]
             )
