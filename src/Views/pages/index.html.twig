@@ -11,11 +11,13 @@
 
 {% block content %}
     <h1>Index</h1>
+
     <p>Hello World!! I am {{ name }}.</p>
+    
     <div class="important">
         <p>Welcome to my awesome homepage.</p>
     </div>
-
+    
 	<form method="POST" action="/pages/csrftest">
 		<h3>Form CSRF</h3>
     	{{ form_token() }}

@@ -12,6 +12,7 @@ if (ENVIRONMENT == 'development')
     $config['host'] = 'localhost';
     $config['dbuser'] = 'root';
     $config['dbpass'] = 'root';
+    $config['useTwigCache'] = false;
 } 
 else 
 {
@@ -20,4 +21,5 @@ else
     $config['host'] = 'localhost';
     $config['dbuser'] = 'user';
     $config['dbpass'] = 'password';
+    $config['useTwigCache'] = true;
 }
